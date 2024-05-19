@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Zone Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="gradient-text">Time Zone Converter</h1>
+  
+        <div class="time-container">
+            <label for="utc-time"><i class="fa-solid fa-earth-americas"></i> UTC Time</label>
+            <div class="input-group">
+                <input type="datetime-local" step="1" id="utc-time" onchange="updateAllTimes('UTC')">
+                                        <button class="copy-btn" onclick="copyToClipboard('utc-time', 'utc-time-tick')"><i class="fas fa-copy"></i></button>
+            <span id="utc-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+            </div>
+      <div>
+    
+    <span class="input-group">
+    	<span class="secondary-text">Epoch Seconds: </span> <span id="utc-epoch-seconds"> </span>
+        <span class="copy-btn-mini" onclick="copyToClipboard('utc-epoch-seconds', 'utc-epoch-seconds-tick')">
+            <i class="fas fa-copy"></i>
+        </span>
+        <span id="utc-epoch-seconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+    </span>
+
+        <span class="input-group">
+    	<span class="secondary-text">Epoch Milliseconds: </span> <span id="utc-epoch-milliseconds"> </span>
+        <span class="copy-btn-mini" onclick="copyToClipboard('utc-epoch-milliseconds', 'utc-epoch-milliseconds-tick')">
+            <i class="fas fa-copy"></i>
+        </span>
+        <span id="utc-epoch-milliseconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+    </span>
+</div>
+
+        </div>
+
+        <label for="bangladesh-time">Bangladesh Time <span class="muted-text">(UTC+06)</span></label>
+        <div class="input-group">
+            <input type="datetime-local" step="1" id="bangladesh-time" onchange="convertTime()">
+                                    <button class="copy-btn" onclick="copyToClipboard('bangladesh-time', 'bangladesh-time-tick')"><i class="fas fa-copy"></i></button>
+            <span id="bangladesh-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+        </div>
+        
+        <div class="time-container">
+            <label for="sydney-time">Sydney Time <span class="muted-text">(UTC+10)</span></label>
+            <div class="input-group">
+                <input type="datetime-local" step="1" id="sydney-time" onchange="updateAllTimes('Australia/Sydney')">
+                                        <button class="copy-btn" onclick="copyToClipboard('sydney-time', 'sydney-time-tick')"><i class="fas fa-copy"></i></button>
+            <span id="sydney-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+            </div>
+            <div > <i class="fa-solid fa-clock"></i> <span id="sydney-time-24" class="muted-text"> hh:mm:ss</span> | 
+            <i class="fa-regular fa-clock"></i> <span id="sydney-time-12" class="muted-text"> hh:mm:ss</span></div>
+        </div>
+        
+        <div class="time-container">
+            <label for="perth-time">Perth Time <span class="muted-text">(UTC+8)</span></label>
+            <div class="input-group">
+                <input type="datetime-local" step="1" id="perth-time" onchange="updateAllTimes('Australia/Perth')">
+                            <button class="copy-btn" onclick="copyToClipboard('perth-time', 'perth-time-tick')"><i class="fas fa-copy"></i></button>
+            <span id="perth-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+            </div>
+            <div > <i class="fa-solid fa-clock"></i> <span id="perth-time-24" class="muted-text"> hh:mm:ss</span> | 
+             <i class="fa-regular fa-clock"></i> <span id="perth-time-12" class="muted-text"> hh:mm:ss</span></div>
+            </div>
+        
+        <button id="clear-button" onclick="clearFields()">Clear</button>
+
+        <br>
+        <h2>Epoch Time Converter</h2>
+        
+        <label for="epoch-seconds">Epoch Time <span class="muted-text">(Seconds)</span></label>
+        <div class="input-group">
+            <input type="text" id="epoch-seconds" placeholder="Enter epoch time in seconds">
+            <button class="copy-btn" onclick="copyToClipboard('epoch-seconds', 'epoch-seconds-tick')"><i class="fas fa-copy"></i></button>
+            <span id="epoch-seconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+        </div>
+
+              <div class="output">
+            <div> <span id="date-time-seconds"></span> <span id="timezone-seconds"> </span></div>
+            </div>
+        
+        <label for="epoch-milliseconds">Epoch Time <span class="muted-text">(Milliseconds)</span></label>
+        <div class="input-group">
+            <input type="text" id="epoch-milliseconds" placeholder="Enter epoch time in milliseconds">
+            <button class="copy-btn" onclick="copyToClipboard('epoch-milliseconds', 'epoch-milliseconds-tick')"><i class="fas fa-copy"></i></button>
+            <span id="epoch-milliseconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+        </div>
+
+        <div class="output">
+                      <div> <span id="date-time-milliseconds"> </span> <span id="timezone-milliseconds"> </span></div>
+        </div>
+        
+        <button onclick="convertEpoch()">Convert</button>
+    </div>
+    
+    <script src="scripts.js"></script>
+</body>
+</html>
