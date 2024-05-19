@@ -123,7 +123,7 @@
             if (epochSeconds) {
                 const dateSeconds = new Date(epochSeconds * 1000);
                 document.getElementById('date-time-seconds').textContent = `Date Time from Seconds: ${dateSeconds.toISOString().replace('T', ' ').slice(0, 19)}`;
-                document.getElementById('timezone-seconds').textContent = `Timezone: ${getTimeZone(dateSeconds)}`;
+                document.getElementById('timezone-seconds').textContent = ` | ${getTimeZone(dateSeconds)}`;
             }
 
             if (epochMilliseconds) {
