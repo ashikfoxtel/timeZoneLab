@@ -139,5 +139,18 @@ function copyToClipboard(elementId, tickId) {
             return `${timeZone} (UTC${formattedOffset})`;
         }
 
-
+        function updateTimezoneOffset() {
+            const timezone = 'Australia/Sydney';
+            const now = new Date();
+            const options = { timeZone: timezone, timeZoneName: 'short' };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+        
+            // Get the timezone offset from the formatted string
+            const parts = formatter.formatToParts(now);
+            const timezoneOffset = parts.find(part => part.type === 'timeZoneName').value;
+        
+            // Update the span element with the calculated offset
+            document.getElementById('timezone-offset').innerText = `(${timezoneOffset})`;
+        }
+updateTimezoneOffset();
 

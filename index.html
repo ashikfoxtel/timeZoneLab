@@ -50,7 +50,7 @@
 		</div>
 		
 		<div class="time-container">
-			<label for="sydney-time">Sydney Time <span class="muted-text">(UTC+10)</span></label>
+			<label for="sydney-time">Sydney Time <span id="timezone-offset" class="muted-text"></span></label>
 			<div class="input-group">
 				<input type="datetime-local" step="1" id="sydney-time" onchange="updateAllTimes('Australia/Sydney')">
 										<button class="copy-btn" onclick="copyToClipboard('sydney-time', 'sydney-time-tick')"><i class="fas fa-copy"></i></button>
