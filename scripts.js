@@ -13,16 +13,27 @@ function updateAllTimes(changedField) {
             date = new Date(document.getElementById('utc-time').value);
             break;
         case 'Australia/Sydney':
-            date = new Date(document.getElementById('sydney-time').value);
+            date = parseLocalDate('sydney-time', 'Australia/Sydney');
             break;
         case 'Australia/Perth':
-            date = new Date(document.getElementById('perth-time').value);
+            date = parseLocalDate('perth-time', 'Australia/Perth');
             break;
     }
 
     if (!date) return;
 
     updateTimeFields(date, changedField);
+}
+
+function parseLocalDate(fieldId, timeZone) {
+    const inputValue = document.getElementById(fieldId).value;
+    if (!inputValue) return null;
+
+    // Create a local date string with the corresponding timezone offset
+    const localDate = new Date(inputValue);
+    const offset = getOffset(timeZone, localDate) * 60000; // Convert to ms
+
+    return new Date(localDate.getTime() - offset);
 }
 
 function updateTimeFields(date, fromZone) {
@@ -81,17 +92,13 @@ function format12HourTime(date) {
 }
 
 function clearFields() {
-    document.getElementById('bangladesh-time').value = '';
-    document.getElementById('utc-time').value = '';
-    document.getElementById('sydney-time').value = '';
-    document.getElementById('perth-time').value = '';
-    document.getElementById('utc-epoch-seconds').textContent = 'Epoch Seconds: ';
-    document.getElementById('utc-epoch-milliseconds').textContent = 'Epoch Milliseconds: ';
-    document.getElementById('sydney-time-24').textContent = '24-Hour Format: ';
-    document.getElementById('sydney-time-12').textContent = '12-Hour Format: ';
-    document.getElementById('perth-time-24').textContent = '24-Hour Format: ';
-    document.getElementById('perth-time-12').textContent = '12-Hour Format: ';
+    const fields = ['bangladesh-time', 'utc-time', 'sydney-time', 'perth-time'];
+    const labels = ['utc-epoch-seconds', 'utc-epoch-milliseconds', 'sydney-time-24', 'sydney-time-12', 'perth-time-24', 'perth-time-12'];
+
+    fields.forEach(id => document.getElementById(id).value = '');
+    labels.forEach(id => document.getElementById(id).textContent = id.includes('epoch') ? 'Epoch: ' : '24-Hour Format: ');
 }
+
 
 function copyToClipboard(elementId, tickId) {
     const element = document.getElementById(elementId);
@@ -111,46 +118,43 @@ function copyToClipboard(elementId, tickId) {
     }, 2000);
 }
 
+function convertEpoch() {
+    const epochSeconds = document.getElementById('epoch-seconds').value;
+    const epochMilliseconds = document.getElementById('epoch-milliseconds').value;
 
-        function convertEpoch() {
-            const epochSeconds = document.getElementById('epoch-seconds').value;
-            const epochMilliseconds = document.getElementById('epoch-milliseconds').value;
+    if (epochSeconds) {
+        const dateSeconds = new Date(epochSeconds * 1000);
+        document.getElementById('date-time-seconds').textContent = `Seconds → ${dateSeconds.toISOString().replace('T', ' ').slice(0, 19)}`;
+    }
 
-            if (epochSeconds) {
-                const dateSeconds = new Date(epochSeconds * 1000);
-                document.getElementById('date-time-seconds').textContent = `Seconds → ${dateSeconds.toISOString().replace('T', ' ').slice(0, 19)}`;
-                // document.getElementById('timezone-seconds').textContent = ` | ${getTimeZone(dateSeconds)}`;
-            }
+    if (epochMilliseconds) {
+        const dateMilliseconds = new Date(parseInt(epochMilliseconds));
+        document.getElementById('date-time-milliseconds').textContent = `Milliseconds → ${dateMilliseconds.toISOString().replace('T', ' ').slice(0, 19)}`;
+    }
+}
 
-            if (epochMilliseconds) {
-                const dateMilliseconds = new Date(parseInt(epochMilliseconds));
-                document.getElementById('date-time-milliseconds').textContent = `Milliseconds → ${dateMilliseconds.toISOString().replace('T', ' ').slice(0, 19)}`;
-                // document.getElementById('timezone-milliseconds').textContent = ` | ${getTimeZone(dateMilliseconds)}`;
-            }
-        }
+function getTimeZone(date) {
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const offset = -date.getTimezoneOffset();
+    const sign = offset >= 0 ? "+" : "-";
+    const hours = Math.floor(Math.abs(offset) / 60);
+    const minutes = Math.abs(offset) % 60;
+    const formattedOffset = `${sign}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+    return `${timeZone} (UTC${formattedOffset})`;
+}
 
-              function getTimeZone(date) {
-            const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            const offset = -date.getTimezoneOffset();
-            const sign = offset >= 0 ? "+" : "-";
-            const hours = Math.floor(Math.abs(offset) / 60);
-            const minutes = Math.abs(offset) % 60;
-            const formattedOffset = `${sign}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-            return `${timeZone} (UTC${formattedOffset})`;
-        }
+function updateTimezoneOffset() {
+    const timezone = 'Australia/Sydney';
+    const now = new Date();
+    const options = { timeZone: timezone, timeZoneName: 'short' };
+    const formatter = new Intl.DateTimeFormat('en-US', options);
 
-        function updateTimezoneOffset() {
-            const timezone = 'Australia/Sydney';
-            const now = new Date();
-            const options = { timeZone: timezone, timeZoneName: 'short' };
-            const formatter = new Intl.DateTimeFormat('en-US', options);
-        
-            // Get the timezone offset from the formatted string
-            const parts = formatter.formatToParts(now);
-            const timezoneOffset = parts.find(part => part.type === 'timeZoneName').value;
-        
-            // Update the span element with the calculated offset
-            document.getElementById('timezone-offset').innerText = `(${timezoneOffset})`;
-        }
+    // Get the timezone offset from the formatted string
+    const parts = formatter.formatToParts(now);
+    const timezoneOffset = parts.find(part => part.type === 'timeZoneName').value;
+
+    // Update the span element with the calculated offset
+    document.getElementById('timezone-offset').innerText = `(${timezoneOffset})`;
+}
+
 updateTimezoneOffset();
-

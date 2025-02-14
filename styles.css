@@ -165,3 +165,31 @@ footer {
     text-decoration: underline;
 }
 
+/* Only for tooltip */
+
+.tooltip-container {
+    position: relative;
+    /* display: inline-block; */
+}
+
+.tooltip-container .tooltip {
+    visibility: hidden;
+    width: 70%;
+    background-color: rgba(0, 0, 0, 0.804);
+    color: #fff;
+    text-align: left;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    font-size: 8pt;
+    transition: opacity 0.3s;
+    white-space: pre-wrap; /* Keeps JSON formatting */
+}
+
+.tooltip-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;

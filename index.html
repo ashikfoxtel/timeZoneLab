@@ -22,6 +22,7 @@
 	.error {
 		color: red;
 	}
+	
 </style>
 </head>
 <body>
@@ -115,8 +116,28 @@
 		<button onclick="convertEpoch()"><i class="fa-solid fa-down-left-and-up-right-to-center"></i> Convert</button>
 <br>
 <h2>UTC Payload Converter</h2>
-    <p>Paste your JSON payload below:</p>
-    <textarea id="inputPayload" placeholder="Paste your JSON payload here..."></textarea>
+    
+	<div class="tooltip-container">
+		<p>Paste your JSON payload below:</p>
+		<div class="tooltip">
+			{
+				"actualLivestreamEndTime": "2024-10-29T15:36:52.299Z",
+				"matchEnded": "-",
+				"exclusions": "odds",
+				"endTimeForComputation": "2025-02-07T15:14:41.848Z",
+				"endDateTime": "2025-02-07T14:14:41.848Z",
+				"startDateTime": "2025-02-07T05:44:41.848Z",
+				"series": "CWC2023",
+				"bufferedEndDateTime": "2025-02-07T15:14:41.848Z",
+				"updatedMatchEndTime": "-",
+				"fixtureStatus": "LIVE",
+				"matchEndRequired": "true",
+				"id": "1000",
+				"sport": "cricket"
+			}
+		</div>
+	</div>
+	<textarea id="inputPayload" placeholder="Paste your JSON payload from GAM audit log here... "></textarea>
     <button class="button" onclick="convertToSydneyTime()">Convert to Sydney Time</button>
     <p id="errorMessage" class="error"></p>
     <p>Converted Payload:</p>
@@ -163,5 +184,7 @@
 
 	
 	<script src="scripts.js"></script>
+	<p>Made with <3 by Ashik Rabbani</p>
 </body>
+
 </html>
