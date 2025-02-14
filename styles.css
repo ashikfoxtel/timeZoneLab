@@ -35,7 +35,7 @@ textarea, pre {
 
 .diagonal-text {
 
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     color: #ff5722; /* Orange color for the text */
     display: flex;
@@ -54,7 +54,7 @@ textarea, pre {
 }
 
 .author {
-    color: #000080; /* Blue for the author */
+    color: #4a4a4f; /* Blue for the author */
 
 }
 

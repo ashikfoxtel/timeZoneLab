@@ -18,6 +18,9 @@ function updateAllTimes(changedField) {
         case 'Australia/Perth':
             date = parseLocalDate('perth-time', 'Australia/Perth');
             break;
+        case 'Asia/Dhaka':
+            date = parseLocalDate('bangladesh-time', 'Asia/Dhaka');
+            break;
     }
 
     if (!date) return;

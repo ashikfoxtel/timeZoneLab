@@ -1,194 +1,195 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Time Zone Converter</title>
-	<link rel="stylesheet" href="styles.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<style>
-	textarea, pre {
-		width: 96%;
-		height: 200px;
-		font-family: monospace;
-		padding: 10px;
-		margin-bottom: 10px;
-		border: 1px solid #ddd;
-		background-color: #f4f4f4;
-		resize: vertical;
-	}
-	.error {
-		color: red;
-	}
-	
-</style>
-</head>
-<body>
-	<div class="container">
-		<h1 class="gradient-text">Time Z<i class="fa-solid fa-earth-americas"></i>ne Lab</h1>
-		<div class="time-container">
-			<label for="utc-time"> UTC Time</label>
-			<div class="input-group">
-				<input type="datetime-local" step="1" id="utc-time" onchange="updateAllTimes('UTC')">
-										<button class="copy-btn" onclick="copyToClipboard('utc-time', 'utc-time-tick')"><i class="fas fa-copy"></i></button>
-			<span id="utc-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
-			</div>
-	  <div>
-	
-	<span class="input-group">
-		<span class="muted-text">Epoch Seconds: </span> <span id="utc-epoch-seconds" class="secondary-text"> </span>
-		<span class="copy-btn-mini" onclick="copyToClipboard('utc-epoch-seconds', 'utc-epoch-seconds-tick')">
-			<i class="fas fa-copy"></i>
-		</span>
-		<span id="utc-epoch-seconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
-	</span>
-
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Time Zone Converter</title>
+		<link rel="stylesheet" href="styles.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+	<link rel="icon" href="favicon.svg" type="image/svg+xml">
+	<style>
+		textarea, pre {
+			width: 96%;
+			height: 200px;
+			font-family: monospace;
+			padding: 10px;
+			margin-bottom: 10px;
+			border: 1px solid #ddd;
+			background-color: #f4f4f4;
+			resize: vertical;
+		}
+		.error {
+			color: red;
+		}
+		
+	</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1 class="gradient-text">Time Z<i class="fa-solid fa-earth-americas"></i>ne Lab</h1>
+			<div class="time-container">
+				<label for="utc-time"> UTC Time</label>
+				<div class="input-group">
+					<input type="datetime-local" step="1" id="utc-time" onchange="updateAllTimes('UTC')">
+											<button class="copy-btn" onclick="copyToClipboard('utc-time', 'utc-time-tick')"><i class="fas fa-copy"></i></button>
+				<span id="utc-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+				</div>
+		<div>
+		
 		<span class="input-group">
-		<span class="muted-text">Epoch Milliseconds: </span> <span id="utc-epoch-milliseconds" class="secondary-text"> </span>
-		<span class="copy-btn-mini" onclick="copyToClipboard('utc-epoch-milliseconds', 'utc-epoch-milliseconds-tick')">
-			<i class="fas fa-copy"></i>
+			<span class="muted-text">Epoch Seconds: </span> <span id="utc-epoch-seconds" class="secondary-text"> </span>
+			<span class="copy-btn-mini" onclick="copyToClipboard('utc-epoch-seconds', 'utc-epoch-seconds-tick')">
+				<i class="fas fa-copy"></i>
+			</span>
+			<span id="utc-epoch-seconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
 		</span>
-		<span id="utc-epoch-milliseconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
-	</span>
-</div>
 
-		</div>
-
-		<label for="bangladesh-time">Bangladesh Time <span class="muted-text">(UTC+06)</span></label>
-		<div class="input-group">
-			<input type="datetime-local" step="1" id="bangladesh-time" onchange="convertTime()">
-									<button class="copy-btn" onclick="copyToClipboard('bangladesh-time', 'bangladesh-time-tick')"><i class="fas fa-copy"></i></button>
-			<span id="bangladesh-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
-		</div>
-		
-		<div class="time-container">
-			<label for="sydney-time">Sydney Time <span id="timezone-offset" class="muted-text"></span></label>
-			<div class="input-group">
-				<input type="datetime-local" step="1" id="sydney-time" onchange="updateAllTimes('Australia/Sydney')">
-										<button class="copy-btn" onclick="copyToClipboard('sydney-time', 'sydney-time-tick')"><i class="fas fa-copy"></i></button>
-			<span id="sydney-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
-			</div>
-			<div > <i class="fa-solid fa-clock"></i> <span id="sydney-time-24" class="muted-text"> hh:mm:ss</span> | 
-			<i class="fa-regular fa-clock"></i> <span id="sydney-time-12" class="muted-text"> hh:mm:ss</span></div>
-		</div>
-		
-		<div class="time-container">
-			<label for="perth-time">Perth Time <span class="muted-text">(UTC+8)</span></label>
-			<div class="input-group">
-				<input type="datetime-local" step="1" id="perth-time" onchange="updateAllTimes('Australia/Perth')">
-							<button class="copy-btn" onclick="copyToClipboard('perth-time', 'perth-time-tick')"><i class="fas fa-copy"></i></button>
-			<span id="perth-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
-			</div>
-			<div > <i class="fa-solid fa-clock"></i> <span id="perth-time-24" class="muted-text" title="Time in 24 Hour format"> hh:mm:ss</span> | 
-			 <i class="fa-regular fa-clock"></i> <span id="perth-time-12" class="muted-text" title="Time in 12 Hour format"> hh:mm:ss</span></div>
-			</div>
-		
-		<button id="clear-button" onclick="clearFields()"><i class="fa-solid fa-eraser"></i> Clear</button>
-
-		<br>
-		<h2>Epoch Time Converter</h2>
-		
-		<label for="epoch-seconds">Epoch Time <span class="muted-text">(Seconds)</span></label>
-		<div class="input-group">
-			<input type="text" id="epoch-seconds" placeholder="Enter epoch time in seconds">
-			<button class="copy-btn" onclick="copyToClipboard('epoch-seconds', 'epoch-seconds-tick')"><i class="fas fa-copy"></i></button>
-			<span id="epoch-seconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
-		</div>
-
-			  <div class="output">
-			<div> <span id="date-time-seconds"></span> <span id="timezone-seconds"> </span></div>
-			</div>
-		
-		<label for="epoch-milliseconds">Epoch Time <span class="muted-text">(Milliseconds)</span></label>
-		<div class="input-group">
-			<input type="text" id="epoch-milliseconds" placeholder="Enter epoch time in milliseconds">
-			<button class="copy-btn" onclick="copyToClipboard('epoch-milliseconds', 'epoch-milliseconds-tick')"><i class="fas fa-copy"></i></button>
-			<span id="epoch-milliseconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
-		</div>
-
-		<div class="output">
-					  <div> <span id="date-time-milliseconds"> </span> <span id="timezone-milliseconds"> </span></div>
-		</div>
-		
-		<button onclick="convertEpoch()"><i class="fa-solid fa-down-left-and-up-right-to-center"></i> Convert</button>
-<br>
-<h2>UTC Payload Converter</h2>
-    
-	<div class="tooltip-container">
-		<p>Paste your JSON payload below:</p>
-		<div class="tooltip">
-			{
-				"actualLivestreamEndTime": "2024-10-29T15:36:52.299Z",
-				"matchEnded": "-",
-				"exclusions": "odds",
-				"endTimeForComputation": "2025-02-07T15:14:41.848Z",
-				"endDateTime": "2025-02-07T14:14:41.848Z",
-				"startDateTime": "2025-02-07T05:44:41.848Z",
-				"series": "CWC2023",
-				"bufferedEndDateTime": "2025-02-07T15:14:41.848Z",
-				"updatedMatchEndTime": "-",
-				"fixtureStatus": "LIVE",
-				"matchEndRequired": "true",
-				"id": "1000",
-				"sport": "cricket"
-			}
-		</div>
+			<span class="input-group">
+			<span class="muted-text">Epoch Milliseconds: </span> <span id="utc-epoch-milliseconds" class="secondary-text"> </span>
+			<span class="copy-btn-mini" onclick="copyToClipboard('utc-epoch-milliseconds', 'utc-epoch-milliseconds-tick')">
+				<i class="fas fa-copy"></i>
+			</span>
+			<span id="utc-epoch-milliseconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+		</span>
 	</div>
-	<textarea id="inputPayload" placeholder="Paste your JSON payload from GAM audit log here... "></textarea>
-    <button class="button" onclick="convertToSydneyTime()">Convert to Sydney Time</button>
-    <p id="errorMessage" class="error"></p>
-    <p>Converted Payload:</p>
-    <pre id="convertedPayload"></pre>
 
-    <script>
-        function convertToSydneyTime() {
-            const inputElement = document.getElementById('inputPayload');
-            const outputElement = document.getElementById('convertedPayload');
-            const errorElement = document.getElementById('errorMessage');
+			</div>
+			<!-- Sydney timezone -->
+			<div class="time-container">
+				<label for="sydney-time">Sydney Time <span id="timezone-offset" class="muted-text"></span> </label>
+				<div class="input-group">
+					<input type="datetime-local" step="1" id="sydney-time" onchange="updateAllTimes('Australia/Sydney')">
+											<button class="copy-btn" onclick="copyToClipboard('sydney-time', 'sydney-time-tick')"><i class="fas fa-copy"></i></button>
+				<span id="sydney-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+				</div>
+				<div > <i class="fa-solid fa-clock"></i> <span id="sydney-time-24" class="muted-text"> hh:mm:ss</span> | 
+				<i class="fa-regular fa-clock"></i> <span id="sydney-time-12" class="muted-text"> hh:mm:ss</span></div>
+			</div>
+			<!-- Perth timezone -->
+			<div class="time-container">
+				<label for="perth-time">Perth Time <span class="muted-text">(UTC+8)</span></label>
+				<div class="input-group">
+					<input type="datetime-local" step="1" id="perth-time" onchange="updateAllTimes('Australia/Perth')">
+								<button class="copy-btn" onclick="copyToClipboard('perth-time', 'perth-time-tick')"><i class="fas fa-copy"></i></button>
+				<span id="perth-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+				</div>
+				<div > <i class="fa-solid fa-clock"></i> <span id="perth-time-24" class="muted-text" title="Time in 24 Hour format"> hh:mm:ss</span> | 
+				<i class="fa-regular fa-clock"></i> <span id="perth-time-12" class="muted-text" title="Time in 12 Hour format"> hh:mm:ss</span></div>
+				</div>
 
-            try {
-                // Parse the JSON input
-                const payload = JSON.parse(inputElement.value.trim());
-                const sydneyOffsetHours = 11; // UTC+11 for Sydney (adjust for DST if needed)
+			<!-- Bangladesh timezone -->
+			<label for="bangladesh-time">Bangladesh Time <span class="muted-text">(UTC+06)</span></label>
+			<div class="input-group">
+				<input type="datetime-local" step="1" id="bangladesh-time" onchange="updateAllTimes('Asia/Dhaka')">
+				<button class="copy-btn" onclick="copyToClipboard('bangladesh-time', 'bangladesh-time-tick')"><i class="fas fa-copy"></i></button>
+				<span id="bangladesh-time-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+			</div>
+			
+			<button id="clear-button" onclick="clearFields()"><i class="fa-solid fa-eraser"></i> Clear</button>
 
-                // Function to recursively convert all UTC times in the object
-                const convertTimes = (obj) => {
-                    for (const key in obj) {
-                        if (typeof obj[key] === 'string' && obj[key].endsWith("Z")) {
-                            const utcDate = new Date(obj[key]);
-                            if (!isNaN(utcDate)) {
-                                const sydneyDate = new Date(utcDate.getTime() + sydneyOffsetHours * 60 * 60 * 1000);
-                                obj[key] = sydneyDate.toISOString().replace("Z", "+11:00");
-                            }
-                        } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-                            convertTimes(obj[key]); // Recursively handle nested objects
-                        }
-                    }
-                };
+			<br>
+			<h2>Epoch Time Converter</h2>
+			
+			<label for="epoch-seconds">Epoch Time <span class="muted-text">(Seconds)</span></label>
+			<div class="input-group">
+				<input type="text" id="epoch-seconds" placeholder="Enter epoch time in seconds">
+				<button class="copy-btn" onclick="copyToClipboard('epoch-seconds', 'epoch-seconds-tick')"><i class="fas fa-copy"></i></button>
+				<span id="epoch-seconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+			</div>
 
-                // Convert all UTC times in the payload
-                convertTimes(payload);
+				<div class="output">
+				<div> <span id="date-time-seconds"></span> <span id="timezone-seconds"> </span></div>
+				</div>
+			
+			<label for="epoch-milliseconds">Epoch Time <span class="muted-text">(Milliseconds)</span></label>
+			<div class="input-group">
+				<input type="text" id="epoch-milliseconds" placeholder="Enter epoch time in milliseconds">
+				<button class="copy-btn" onclick="copyToClipboard('epoch-milliseconds', 'epoch-milliseconds-tick')"><i class="fas fa-copy"></i></button>
+				<span id="epoch-milliseconds-tick" class="tick-mark"><i class="fas fa-check"></i></span>
+			</div>
 
-                // Display the converted payload
-                outputElement.textContent = JSON.stringify(payload, null, 4);
-                errorElement.textContent = ""; // Clear any previous errors
-            } catch (error) {
-                errorElement.textContent = "Invalid JSON input. Please check your payload.";
-                outputElement.textContent = ""; // Clear output if there's an error
-            }
-        }
-    </script>
+			<div class="output">
+						<div> <span id="date-time-milliseconds"> </span> <span id="timezone-milliseconds"> </span></div>
+			</div>
+			
+			<button onclick="convertEpoch()"><i class="fa-solid fa-down-left-and-up-right-to-center"></i> Convert</button>
+	<br>
+	<h2>UTC Payload Converter</h2>
+		
+		<div class="tooltip-container">
+			<p>Paste your JSON payload below:</p>
+			<div class="tooltip">
+				{
+					"actualLivestreamEndTime": "2024-10-29T15:36:52.299Z",
+					"matchEnded": "-",
+					"exclusions": "odds",
+					"endTimeForComputation": "2025-02-07T15:14:41.848Z",
+					"endDateTime": "2025-02-07T14:14:41.848Z",
+					"startDateTime": "2025-02-07T05:44:41.848Z",
+					"series": "CWC2023",
+					"bufferedEndDateTime": "2025-02-07T15:14:41.848Z",
+					"updatedMatchEndTime": "-",
+					"fixtureStatus": "LIVE",
+					"matchEndRequired": "true",
+					"id": "1000",
+					"sport": "cricket"
+				}
+			</div>
+		</div>
+		<textarea id="inputPayload" placeholder="Paste your JSON payload from GAM audit log here... "></textarea>
+		<button class="button" onclick="convertToSydneyTime()">Convert to Sydney Time</button>
+		<p id="errorMessage" class="error"></p>
+		<p>Converted Payload:</p>
+		<pre id="convertedPayload"></pre>
 
-	
-	<script src="scripts.js"></script>
-	<span class="diagonal-text">
-		<span class="version">v2.0(beta)</span> 
-		<span class="separator">•</span> 
-		<span class="author">Made with ❤️ by Ashik Rabbani</span>
-	  </span>
-	  
-</body>
+		<script>
+			function convertToSydneyTime() {
+				const inputElement = document.getElementById('inputPayload');
+				const outputElement = document.getElementById('convertedPayload');
+				const errorElement = document.getElementById('errorMessage');
 
-</html>
+				try {
+					// Parse the JSON input
+					const payload = JSON.parse(inputElement.value.trim());
+					const sydneyOffsetHours = 11; // UTC+11 for Sydney (adjust for DST if needed)
+
+					// Function to recursively convert all UTC times in the object
+					const convertTimes = (obj) => {
+						for (const key in obj) {
+							if (typeof obj[key] === 'string' && obj[key].endsWith("Z")) {
+								const utcDate = new Date(obj[key]);
+								if (!isNaN(utcDate)) {
+									const sydneyDate = new Date(utcDate.getTime() + sydneyOffsetHours * 60 * 60 * 1000);
+									obj[key] = sydneyDate.toISOString().replace("Z", "+11:00");
+								}
+							} else if (typeof obj[key] === 'object' && obj[key] !== null) {
+								convertTimes(obj[key]); // Recursively handle nested objects
+							}
+						}
+					};
+
+					// Convert all UTC times in the payload
+					convertTimes(payload);
+
+					// Display the converted payload
+					outputElement.textContent = JSON.stringify(payload, null, 4);
+					errorElement.textContent = ""; // Clear any previous errors
+				} catch (error) {
+					errorElement.textContent = "Invalid JSON input. Please check your payload.";
+					outputElement.textContent = ""; // Clear output if there's an error
+				}
+			}
+		</script>
+
+		
+		<script src="scripts.js"></script>
+		<span class="diagonal-text">
+			<span class="version">v2.1(beta)</span> 
+			<span class="separator">•</span> 
+			<span class="author">Made with ❤️ by Ashik Rabbani for FOXTELians</span>
+		</span>
+		
+	</body>
+
+	</html>
