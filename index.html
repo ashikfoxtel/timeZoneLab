@@ -8,7 +8,21 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-
+<style>
+	textarea, pre {
+		width: 96%;
+		height: 200px;
+		font-family: monospace;
+		padding: 10px;
+		margin-bottom: 10px;
+		border: 1px solid #ddd;
+		background-color: #f4f4f4;
+		resize: vertical;
+	}
+	.error {
+		color: red;
+	}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -99,14 +113,54 @@
 		</div>
 		
 		<button onclick="convertEpoch()"><i class="fa-solid fa-down-left-and-up-right-to-center"></i> Convert</button>
+<br>
+<h2>UTC Payload Converter</h2>
+    <p>Paste your JSON payload below:</p>
+    <textarea id="inputPayload" placeholder="Paste your JSON payload here..."></textarea>
+    <button class="button" onclick="convertToSydneyTime()">Convert to Sydney Time</button>
+    <p id="errorMessage" class="error"></p>
+    <p>Converted Payload:</p>
+    <pre id="convertedPayload"></pre>
 
-<!-- 	
-    <div class="footer-container">
-        <p>Developed with <i class="fa-solid fa-shield-heart" style="color: #c31d1d;"></i> by <span><a href="mailto:your.email@example.com">Ashik Rabbani</a></span></p>
-         </div>
+    <script>
+        function convertToSydneyTime() {
+            const inputElement = document.getElementById('inputPayload');
+            const outputElement = document.getElementById('convertedPayload');
+            const errorElement = document.getElementById('errorMessage');
 
+            try {
+                // Parse the JSON input
+                const payload = JSON.parse(inputElement.value.trim());
+                const sydneyOffsetHours = 11; // UTC+11 for Sydney (adjust for DST if needed)
 
-	</div> -->
+                // Function to recursively convert all UTC times in the object
+                const convertTimes = (obj) => {
+                    for (const key in obj) {
+                        if (typeof obj[key] === 'string' && obj[key].endsWith("Z")) {
+                            const utcDate = new Date(obj[key]);
+                            if (!isNaN(utcDate)) {
+                                const sydneyDate = new Date(utcDate.getTime() + sydneyOffsetHours * 60 * 60 * 1000);
+                                obj[key] = sydneyDate.toISOString().replace("Z", "+11:00");
+                            }
+                        } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                            convertTimes(obj[key]); // Recursively handle nested objects
+                        }
+                    }
+                };
+
+                // Convert all UTC times in the payload
+                convertTimes(payload);
+
+                // Display the converted payload
+                outputElement.textContent = JSON.stringify(payload, null, 4);
+                errorElement.textContent = ""; // Clear any previous errors
+            } catch (error) {
+                errorElement.textContent = "Invalid JSON input. Please check your payload.";
+                outputElement.textContent = ""; // Clear output if there's an error
+            }
+        }
+    </script>
+
 	
 	<script src="scripts.js"></script>
 </body>
