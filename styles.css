@@ -32,6 +32,33 @@ textarea, pre {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+
+.diagonal-text {
+
+    font-size: 12px;
+    font-weight: bold;
+    color: #ff5722; /* Orange color for the text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between elements */
+ 
+}
+
+.version {
+    color: #4CAF50; /* Green for the version */
+}
+
+.separator {
+    color: #757575; /* Gray for the separator */
+}
+
+.author {
+    color: #000080; /* Blue for the author */
+
+}
+
+
 .gradient-text {
     font-size: 2em;
     font-weight: bold;
